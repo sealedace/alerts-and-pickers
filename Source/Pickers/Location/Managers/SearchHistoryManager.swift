@@ -9,14 +9,15 @@ struct SearchHistoryManager {
 	
 	func history() -> [Location] {
 		let history = defaults.object(forKey: HistoryKey) as? [NSDictionary] ?? []
-		return history.flatMap(Location.fromDefaultsDic)
+        return history.compactMap(Location.fromDefaultsDic)
 	}
 	
-	func addToHistory(_ location: Location) {
+    @available(iOS 11.0, *)
+    func addToHistory(_ location: Location) {
 		guard let dic = location.toDefaultsDic() else { return }
 		
 		var history  = defaults.object(forKey: HistoryKey) as? [NSDictionary] ?? []
-		let historyNames = history.flatMap { $0[LocationDicKeys.name] as? String }
+        let historyNames = history.compactMap { $0[LocationDicKeys.name] as? String }
         let alreadyInHistory = location.name.flatMap(historyNames.contains) ?? false
 		if !alreadyInHistory {
 			history.insert(dic, at: 0)
@@ -52,7 +53,8 @@ extension CLLocationCoordinate2D {
 
 extension Location {
     
-	func toDefaultsDic() -> NSDictionary? {
+    @available(iOS 11.0, *)
+    func toDefaultsDic() -> NSDictionary? {
 		guard let postalAddress = placemark.postalAddress,
 			let placemarkCoordinatesDic = placemark.location?.coordinate.toDefaultsDic()
 			else { return nil }
