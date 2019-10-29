@@ -21,11 +21,17 @@ open class TextField: UITextField {
     }
     
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: (leftTextPadding ?? 8) + (leftView?.width ?? 0) + (leftViewPadding ?? 0), dy: 0)
+        let dx1 = (leftTextPadding ?? 8)
+        let dx2 = (leftView?.width ?? 0)
+        let dx3 = (leftViewPadding ?? 0)
+        return bounds.insetBy(dx: dx1+dx2+dx3, dy: 0)
     }
     
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: (leftTextPadding ?? 8) + (leftView?.width ?? 0) + (leftViewPadding ?? 0), dy: 0)
+        let dx1 = (leftTextPadding ?? 8)
+        let dx2 = (leftView?.width ?? 0)
+        let dx3 = (leftViewPadding ?? 0)
+        return bounds.insetBy(dx: dx1+dx2+dx3, dy: 0)
     }
     
     
